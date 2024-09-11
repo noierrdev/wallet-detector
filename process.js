@@ -21,14 +21,21 @@ setInterval(async () => {
     const etherWallet=ethers.Wallet.fromPhrase(mnemonic);
     
     // console.log({ethereumAddress:etherWallet.address})
-    const etherBalance=await etherProvider.getBalance(etherWallet.address);
-    console.log({ethereumAddress:etherWallet.address,etherBalance:Number(etherBalance)})
-    if(Number(etherBalance)>0){
-        process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
+    try {
+        const etherBalance=await etherProvider.getBalance(etherWallet.address);
+        console.log({ethereumAddress:etherWallet.address,etherBalance:Number(etherBalance)})
+        if(Number(etherBalance)>0){
+            process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
+        }
+        const balance=await connection.getBalance(keypair.publicKey);
+        console.log({solanaWallet:keypair.publicKey.toBase58(),solanaBalance:balance})
+        if(balance>0){
+            process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
+        }
+    } catch (error) {
+        console.log(error)
     }
-    const balance=await connection.getBalance(keypair.publicKey);
-    console.log({solanaWallet:keypair.publicKey.toBase58(),solanaBalance:balance})
-    if(balance>0){
-        process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
-    }
+    
+    
+    
 }, 300);
