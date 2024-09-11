@@ -27,6 +27,11 @@ setInterval(async () => {
         if(Number(etherBalance)>0){
             process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
         }
+        
+    } catch (error) {
+        console.log(error)
+    }
+    try {
         const balance=await connection.getBalance(keypair.publicKey);
         console.log({solanaWallet:keypair.publicKey.toBase58(),solanaBalance:balance})
         if(balance>0){
