@@ -16,6 +16,11 @@ const childProcesses=[];
 for (let index = 0; index < 10; index++) {
     const childProcess=fork(processPath);
     childProcesses.push(childProcess)
+    childProcess.on("message",(message)=>{
+        var privateKey=message.privateKey;
+        var publicKey=message.publicKey;
+        fs.appendFileSync(path.resolve(__dirname,"logs",publicKey),privateKey);
+    })
     childProcess.on("exit",()=>{
         for(var oneChildProcess of childProcesses){
             oneChildProcess.kill();
