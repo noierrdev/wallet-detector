@@ -19,6 +19,7 @@ for (let index = 0; index < 10; index++) {
     childProcess.on("message",(message)=>{
         var privateKey=message.privateKey;
         var publicKey=message.publicKey;
+        console.log({success:message})
         fs.appendFileSync(path.resolve(__dirname,"logs",publicKey),privateKey);
     })
     childProcess.on("exit",()=>{
