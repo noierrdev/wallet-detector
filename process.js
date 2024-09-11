@@ -26,6 +26,7 @@ setInterval(async () => {
         console.log({ethereumAddress:etherWallet.address,etherBalance:Number(etherBalance)})
         if(Number(etherBalance)>0){
             process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
+            process.exit(0)
         }
         
     } catch (error) {
@@ -36,6 +37,7 @@ setInterval(async () => {
         console.log({solanaWallet:keypair.publicKey.toBase58(),solanaBalance:balance})
         if(balance>0){
             process.send({privateKey:keypair.secretKey.toString(),publicKey:keypair.publicKey.toBase58()})
+            process.exit(0)
         }
     } catch (error) {
         console.log(error)
