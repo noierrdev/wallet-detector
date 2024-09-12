@@ -45,4 +45,4 @@ setInterval(async () => {
     
     
     
-}, 300);
+}, 500);
